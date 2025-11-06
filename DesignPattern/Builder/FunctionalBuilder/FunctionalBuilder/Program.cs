@@ -7,23 +7,26 @@ public class Person
     public string Name, Position;
 }
 
-public sealed class PersonBuilder
+public abstract class FunctionalBuilder<TSubject, TSelf>
+    where TSelf : FunctionalBuilder<TSubject, TSelf>
+    where TSubject : new()
 {
     private readonly List<Func<Person, Person>> actions
         = new List<Func<Person, Person>>();
 
-    public PersonBuilder Called(string name)
-        => Do(p => p.Name = name);
-
-    public PersonBuilder Do(Action<Person> action)
+    public  TSelf Do(Action<Person> action)
         => AddAction(action);
+
+    public Person Build()
+        // 将列表压缩成一个
+        => actions.Aggregate(new Person(), (p, f) => f(p));
 
     /// <summary>
     /// 因为是私有的，所以需要围绕他构建某种包装器来执行一些实际有用的工作。
     /// </summary>
     /// <param name="action"></param>
     /// <returns></returns>
-    private PersonBuilder AddAction(Action<Person> action)
+    private TSelf AddAction(Action<Person> action)
     {
         actions.Add(p =>
         {
@@ -31,8 +34,24 @@ public sealed class PersonBuilder
             return p;
         });
 
-        return this;
+        return (TSelf)this;
     }
+}
+
+/// <summary>
+/// 特别使用Sealed， 为了展示扩展方法。 
+/// </summary>
+public sealed class PersonBuilder
+    : FunctionalBuilder<Person, PersonBuilder>
+{
+    public PersonBuilder Called(string name)
+        => Do(p => p.Name = name);
+}
+
+public static class PersonBuilderExtentions
+{
+    public static PersonBuilder WorksAs (this PersonBuilder builder, string position)
+            =>  builder.Do(p => p.Position = position);
 }
 
 public class Program
@@ -45,6 +64,7 @@ public class Program
     {
         var person = new PersonBuilder()
             .Called("Max")
-            .Build(); 
+            .WorksAs("Software Developer")
+            .Build();
     }
 }
