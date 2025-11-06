@@ -14,6 +14,9 @@ namespace Builder
     /// 1. 实现链式调用（fluent API）：像 .SetName("Max").SetAge(30).Build() 这样优雅地构建对象。
     /// 2. 支持继承：子类可以扩展构建器，但仍然保留链式调用。
     /// 3. 保持类型安全：每一步返回的是当前构建器的类型，而不是父类的类型。
+    /// 
+    /// 继承流式接口很困难，要求创建泛型类。 
+    /// 
     /// </summary>
     class Program
     {
@@ -24,6 +27,9 @@ namespace Builder
                 .WorksAsA("Software Engineer")
                 .Build();
             System.Console.WriteLine(me);
+
+            // PersonJobBuilder<Pserson.Builder>
+            var a = Person.New.called("Max");
         }
     }
 
