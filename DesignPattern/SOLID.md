@@ -12,18 +12,16 @@
 
 错误示范
 
-![image.png](attachment:f4b186b6-d9d1-4b5f-89b4-36b4af8a76f7:image.png)
-
+![alt text](image.png)
 正确修改：
 
 无需知道具体的支付方式细节
 
-![image.png](attachment:f682e3fd-8ed5-4f27-8380-60fc6867cb23:image.png)
+![alt text](image-1.png)
 
 当引入新的支付方式时，只需添加一个实现了IPaymentMethod接口的新类，而不需修改paymentProcessor的代码，这种方式使得PaymentProcessor对新的支付方式开放，对修改封闭
 
-![image.png](attachment:1f8835d9-443e-4a49-8f71-11964c675404:image.png)
-
+![alt text](image-2.png)
 提高了代码的灵活性和可维护性
 
 # 3. 里氏替换原则
@@ -36,12 +34,10 @@
 
 鸵鸟继承鸟类但是不会飞，违反里氏替换原则
 
-![image.png](attachment:398ac674-b335-4b4f-97f4-4445734ce393:image.png)
-
+![alt text](image-3.png)
 正确方式：
 
-![image.png](attachment:872fbd34-3084-4058-a18e-e9fdc91d28f4:image.png)
-
+![alt text](image-4.png)
 # 4. 接口隔离原则
 
 一个类不应该被迫依赖于他不需要的接口
