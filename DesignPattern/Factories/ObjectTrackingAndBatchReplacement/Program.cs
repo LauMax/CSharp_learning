@@ -59,7 +59,7 @@ public class ReplaceableThemeFactory
     {
         foreach(var wv in themes)
         {
-            if(WriteOnceBlock.TryGetTarget(out var reference))
+            if(wv.TryGetTarget(out var reference))
             {
                 reference.Value = createThemeImpl(dark);
             }
